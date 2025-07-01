@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: bcm-transformer
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m bcm_transformer.app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+    plan: free
