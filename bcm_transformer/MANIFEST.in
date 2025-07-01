@@ -1,3 +1,0 @@
-include bcm_transformer/static/*
-include bcm_transformer/templates/*
-include bcm_transformer/excel_data/*
