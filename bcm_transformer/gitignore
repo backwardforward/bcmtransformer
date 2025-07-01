@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+output/
+*.pptx
+.env
+.DS_Store
+.idea/
+*.log
