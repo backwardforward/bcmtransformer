@@ -5,173 +5,206 @@
     <title>Business Capability Map Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blue1: #3674B5;
-            --blue2: #578FCA;
-            --yellow1: #FADA7A;
-            --cream: #F5F0CD;
+            --primary: #3674B5;
+            --secondary: #578FCA;
+            --sand: #F5F0CD;
+            --yellow: #FADA7A;
+            --radius: 18px;
         }
+        html { font-size: 16px; }
         body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(120deg, var(--blue2) 0%, var(--cream) 100%);
             min-height: 100vh;
+            background: linear-gradient(120deg, var(--secondary) 0%, var(--sand) 100%);
+            font-family: 'Inter', 'Open Sans', system-ui, Arial, sans-serif;
             color: #222;
+            margin: 0;
         }
-        .hero {
-            background: linear-gradient(120deg, var(--blue1) 0%, var(--blue2) 100%);
-            color: var(--cream);
-            padding: 64px 0 48px 0;
-            text-align: center;
-            box-shadow: 0 4px 32px #0002;
-        }
-        .hero h1 {
-            font-size: 2.8em;
-            font-weight: 800;
-            margin-bottom: 0.2em;
-            letter-spacing: -1px;
-        }
-        .hero p {
-            font-size: 1.3em;
-            margin-bottom: 1.5em;
-            color: var(--yellow1);
-        }
-        .cta-btn {
-            background: var(--yellow1);
-            color: var(--blue1);
-            border: none;
-            border-radius: 8px;
-            padding: 18px 38px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 8px #0001;
-            transition: background 0.2s;
-        }
-        .cta-btn:hover {
-            background: #ffe08a;
-        }
-        .trust {
-            margin-top: 2em;
-            font-size: 1em;
-            color: var(--cream);
-            opacity: 0.85;
-        }
-        .features-section {
+        .main-card {
+            max-width: 1100px;
+            margin: 40px auto 32px auto;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 6px 32px #0002;
+            padding: 0 0 32px 0;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .header {
+            padding: 40px 32px 16px 32px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+            color: #fff;
+            text-align: center;
+        }
+        .header-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3em;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: flex-start;
-            gap: 48px;
-            background: var(--cream);
-            padding: 48px 0 32px 0;
+            gap: 0.5em;
         }
-        .features {
-            max-width: 420px;
-            margin: 0 24px;
-        }
-        .features h2 {
-            color: var(--blue1);
-            font-size: 2em;
+        .header-sub {
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: var(--yellow);
             margin-bottom: 0.5em;
         }
-        .features ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1.5em 0;
+        .step {
+            margin: 0 40px 32px 40px;
+            padding: 32px 32px;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px #0001;
+            position: relative;
         }
-        .features ul li {
-            margin-bottom: 0.7em;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-        }
-        .features ul li i {
-            color: var(--blue2);
-            margin-right: 10px;
-        }
-        .sample-img {
-            background: var(--yellow1);
-            border-radius: 18px;
-            box-shadow: 0 2px 16px #0002;
-            width: 340px;
-            height: 220px;
+        .step:not(:first-child) { margin-top: 0; }
+        .step-number {
+            position: absolute;
+            left: -24px;
+            top: 32px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.2em;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
-            color: var(--blue1);
-            margin: 0 24px;
+            box-shadow: 0 2px 8px #0001;
         }
-        .generator-section {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 2px 16px #0002;
-            max-width: 700px;
-            margin: 48px auto 32px auto;
-            padding: 36px 32px 32px 32px;
-        }
-        .generator-section h2 {
-            color: var(--blue1);
-            text-align: center;
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
             margin-bottom: 1.2em;
+            margin-left: 24px;
         }
-        .footer {
-            text-align: center;
-            color: var(--blue2);
-            font-size: 1em;
-            padding: 24px 0 16px 0;
-            background: var(--cream);
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
-        @media (max-width: 900px) {
-            .features-section { flex-direction: column; align-items: center; }
-            .sample-img { margin: 32px 0 0 0; }
-        }
-        .bcm-upload-card {
+        .form-group {
+            background: var(--sand);
+            border-radius: 12px;
+            padding: 16px 14px 10px 14px;
             display: flex;
-            background: var(--cream);
-            border-radius: 18px;
-            box-shadow: 0 2px 16px #0002;
-            padding: 32px 24px;
+            flex-direction: column;
+            gap: 6px;
+            border: 1px solid #e0e6ef;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+        .form-group input, .form-group select {
+            font-size: 1em;
+            border-radius: 6px;
+            border: 1px solid var(--secondary);
+            padding: 8px 10px;
+            background: #fff;
+            color: #222;
+        }
+        .form-group input[type="color"] {
+            padding: 0;
+            height: 36px;
+            width: 48px;
+            border: none;
+            background: none;
+        }
+        .input-options {
+            display: flex;
             gap: 32px;
-            align-items: flex-start;
-            margin-bottom: 32px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            justify-content: center;
+            position: relative;
+        }
+        .excel-upload {
+            flex: 1 1 340px;
+            min-width: 320px;
+            max-width: 420px;
+            background: var(--sand);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 24px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            border: 1.5px solid #e0e6ef;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .manual-table {
+            flex: 1 1 420px;
+            min-width: 340px;
+            max-width: 500px;
+            background: var(--sand);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 24px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            border: 1.5px solid #e0e6ef;
+            box-sizing: border-box;
+            margin: 0 0 0 8px;
+        }
+        .input-options > .excel-upload,
+        .input-options > .manual-table {
+            height: 100%;
+        }
+        .input-options > .or-separator {
+            align-self: center;
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
         }
         .bcm-upload-drop {
-            flex: 1;
-            min-width: 220px;
-            min-height: 220px;
-            border: 2px dashed var(--blue2);
-            border-radius: 16px;
             background: #fff;
+            border: 2px dashed var(--secondary);
+            border-radius: 12px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            margin-bottom: 16px;
             transition: border-color 0.2s;
-            padding: 18px 12px;
+            position: relative;
         }
         .bcm-upload-drop.dragover {
-            border-color: var(--blue1);
-            background: var(--yellow1);
+            border-color: var(--primary);
+            background: var(--yellow);
         }
         .upload-icon {
-            font-size: 40px;
-            color: var(--blue1);
-            margin-bottom: 12px;
+            font-size: 2.5em;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
         .bcm-upload-text {
-            color: var(--blue1);
+            color: var(--primary);
             font-size: 1.1em;
             margin-bottom: 4px;
+            font-weight: 600;
         }
         .bcm-browse-btn {
-            background: var(--blue1);
+            background: var(--primary);
             color: #fff;
             border: none;
             border-radius: 6px;
@@ -182,36 +215,35 @@
             transition: background 0.2s;
         }
         .bcm-browse-btn:hover {
-            background: var(--blue2);
+            background: var(--yellow);
+            color: var(--primary);
         }
         .bcm-upload-drop input[type="file"] {
             display: none;
         }
         .bcm-upload-list {
-            flex: 1;
-            min-width: 180px;
-            margin-left: 24px;
+            margin-bottom: 10px;
         }
         .bcm-upload-list-title {
-            font-weight: bold;
-            color: var(--blue1);
-            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
         }
         .bcm-upload-file-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: var(--yellow1);
+            background: var(--yellow);
             border-radius: 8px;
             padding: 8px 12px;
             margin-bottom: 8px;
             font-size: 1em;
-            color: var(--blue1);
+            color: var(--primary);
             box-shadow: 0 1px 4px #0001;
         }
         .bcm-upload-file-icon {
             font-size: 1.2em;
-            color: var(--blue2);
+            color: var(--secondary);
         }
         .bcm-upload-file-name {
             flex: 1;
@@ -232,52 +264,48 @@
         .bcm-upload-delete-btn:hover {
             background: #ffeaea;
         }
-        .generate-btn {
-            background: var(--blue1);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 24px;
+        .manual-table .table-wrapper {
             width: 100%;
-            box-shadow: 0 2px 8px #0001;
-            transition: background 0.2s, transform 0.1s;
-            padding: 18px 0;
-            letter-spacing: 0.5px;
+            max-width: 100%;
+            overflow-x: auto;
         }
-        .generate-btn:hover {
-            background: var(--blue2);
-            transform: translateY(-2px) scale(1.03);
-        }
-        .generate-btn-big {
-            font-size: 1.6em;
-            padding: 28px 0;
-            margin-top: 36px;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px #0002;
-        }
-        .generate-btn-full {
-            width: calc(100% + 48px);
-            margin-left: -24px;
-            margin-right: -24px;
-            border-radius: 0 0 16px 16px;
-            display: block;
-        }
-        .bcm-font-select {
+        .manual-table table {
             width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid var(--blue2);
-            font-size: 1.1em;
-            margin-top: 4px;
-            margin-bottom: 0;
+            max-width: 100%;
+            table-layout: fixed;
             background: #fff;
-            color: var(--blue1);
+            border-radius: 0;
+            box-shadow: none;
         }
-        .bcm-font-select:focus {
-            outline: 2px solid var(--blue2);
+        .manual-table th, .manual-table td {
+            padding: 10px 6px;
+            min-width: 80px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .manual-table th {
+            background: var(--primary);
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+        .manual-table td:empty:before {
+            content: '\00a0';
+        }
+        .manual-table tr:hover td {
+            background: #f7faff;
+        }
+        .manual-table td:focus {
+            outline: 2px solid var(--primary);
+            background: #FADA7A;
+        }
+        .manual-table .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            width: 100%;
+            justify-content: flex-start;
         }
         .delete-row-btn {
             background: none;
@@ -292,190 +320,534 @@
         .delete-row-btn:hover {
             background: #ffeaea;
         }
+        .add-row-btn {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 28px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
         .add-row-btn:hover {
-            background: var(--blue1);
+            background: var(--primary);
         }
-        #capabilityTable th, #capabilityTable td {
-            border: 1px solid var(--blue2);
-            padding: 8px 6px;
-            text-align: left;
+        .generate-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            width: 100%;
+            box-shadow: 0 2px 8px #0001;
+            transition: background 0.2s, transform 0.1s;
+            padding: 18px 0;
+            letter-spacing: 0.5px;
         }
-        #capabilityTable th {
-            background: var(--blue1);
+        .generate-btn:hover {
+            background: var(--yellow);
+            color: var(--primary);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 18px;
+        }
+        .spinner i {
+            font-size: 2em;
+            color: var(--primary);
+        }
+        .success-message {
+            color: var(--primary);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 18px;
+            font-size: 1.1em;
+        }
+        .download-btn {
+            background: var(--yellow);
+            color: var(--primary);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 18px auto 0 auto;
+            display: block;
+            padding: 16px 32px;
+            box-shadow: 0 2px 8px #0001;
+            transition: background 0.2s;
+        }
+        .download-btn:hover {
+            background: var(--primary);
             color: #fff;
         }
-        #capabilityTable td:empty:before {
-            content: '\00a0';
+        @media (max-width: 900px) {
+            .main-card { margin: 16px 0; }
+            .step, .header { margin: 0 8px; }
+            .input-options { flex-direction: row; gap: 18px; }
+            .excel-upload, .manual-table { max-width: 100%; }
+        }
+        @media (max-width: 700px) {
+            .input-options { flex-direction: column; gap: 18px; }
+            .excel-upload, .manual-table { max-width: 100%; }
+            .manual-table { margin-left: 0; }
+            .manual-table th, .manual-table td {
+                padding: 7px 3px;
+                font-size: 0.95em;
+                min-width: 60px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-card { padding: 0; }
+            .header, .step { padding: 18px 6px; }
+            .step-title { font-size: 1.1rem; }
+        }
+        /* --- Navbar --- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            background: rgba(255,255,255,0.92);
+            box-shadow: 0 2px 12px #0001;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 58px;
+            font-family: 'Inter', 'Open Sans', system-ui, Arial, sans-serif;
+        }
+        .nav-left {
+            font-weight: 700;
+            font-size: 1.18em;
+            color: #3674B5;
+            letter-spacing: 0.5px;
+        }
+        .nav-right {
+            display: flex;
+            gap: 24px;
+        }
+        .nav-link {
+            color: #3674B5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background 0.18s, color 0.18s;
+        }
+        .nav-link:hover {
+            background: #FADA7A;
+            color: #222;
+        }
+        /* --- Hero Section --- */
+        .hero-landing {
+            width: 100%;
+            background: linear-gradient(120deg, #578FCA 0%, #F5F0CD 100%);
+            padding: 64px 0 48px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-content {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+        .hero-left {
+            flex: 1 1 400px;
+            min-width: 320px;
+        }
+        .hero-headline {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 0.5em;
+            letter-spacing: -1px;
+        }
+        .hero-sub {
+            font-size: 1.18rem;
+            color: #578FCA;
+            margin-bottom: 1.5em;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: #3674B5;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 16px 38px;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px #0001;
+            transition: background 0.18s, color 0.18s;
+        }
+        .hero-cta:hover {
+            background: #FADA7A;
+            color: #3674B5;
+        }
+        .hero-right {
+            flex: 1 1 400px;
+            min-width: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-img-placeholder {
+            width: 100%;
+            max-width: 420px;
+            min-height: 220px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px #0002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #3674B5;
+            position: relative;
+        }
+        .img-fallback {
+            position: absolute;
+            left: 0; right: 0; top: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3674B5;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        @media (max-width: 900px) {
+            .hero-content { flex-direction: column; gap: 32px; padding: 0 12px; }
+            .hero-left, .hero-right { min-width: 0; }
+        }
+        @media (max-width: 700px) {
+            .navbar { padding: 0 10px; }
+            .hero-landing { padding: 36px 0 24px 0; }
+            .hero-content { gap: 18px; }
+            .hero-headline { font-size: 1.3rem; }
+            .hero-sub { font-size: 1em; }
+            .hero-img-placeholder { min-height: 120px; }
+        }
+        /* Add margin to main app card to avoid nav overlap */
+        #generator { scroll-margin-top: 80px; }
+        .how-section {
+            width: 100%;
+            background: linear-gradient(120deg, #F5F0CD 0%, #fff 100%);
+            padding: 64px 0 64px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .how-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 2.2em;
+            text-align: center;
+        }
+        .how-steps {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            max-width: 1100px;
+        }
+        .how-step {
+            flex: 1 1 200px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #0001;
+            padding: 32px 18px 24px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 180px;
+            max-width: 260px;
+        }
+        .how-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px #0001;
+        }
+        .how-stepnum {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #578FCA;
+            margin-bottom: 6px;
+        }
+        .how-heading {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .how-desc {
+            font-size: 1em;
+            color: #444;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        @media (max-width: 900px) {
+            .how-steps { gap: 18px; }
+            .how-step { padding: 24px 8px 18px 8px; }
+        }
+        @media (max-width: 700px) {
+            .how-steps {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+            }
+            .how-step { max-width: 340px; width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>Business Capability Map Generator</h1>
-        <p>Upload your Excel, customize your style, and generate a beautiful capability map in PowerPoint.<br>
-        <span style="color: var(--cream); font-size: 0.9em;">No signup required. 100% free & private.</span></p>
-        <button class="cta-btn" onclick="document.getElementById('bcmForm').scrollIntoView({behavior: 'smooth'})">Start Now</button>
-        <div class="trust">Trusted by business architects, consultants, and transformation teams.</div>
-    </div>
-    <div class="features-section">
-        <div class="features">
-            <h2>Why use this tool?</h2>
-            <ul>
-                <li><i class="fa-solid fa-bolt"></i> Fast: From Excel to PowerPoint in seconds</li>
-                <li><i class="fa-solid fa-palette"></i> Customizable: Colors, fonts, box sizes, and more</li>
-                <li><i class="fa-solid fa-lock"></i> Secure: Your data stays on your device</li>
-                <li><i class="fa-solid fa-download"></i> Free: No signup, no hidden costs</li>
-            </ul>
-            <p>Visualize your business capabilities instantly. Just upload your Excel, adjust the look, and download your ready-to-use PowerPoint map.</p>
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">CapabilityMapGenerator</div>
+        <div class="nav-right">
+            <a href="#how-it-works" class="nav-link">How it works</a>
+            <a href="#generator" class="nav-link">Try it now</a>
+            <a href="https://github.com/backwardforward/bcmtransformer" class="nav-link" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
         </div>
-    </div>
-    <div class="generator-section">
-        <h2>Generate your Capability Map</h2>
-        <div class="bcm-upload-card">
-            <div class="bcm-upload-drop" id="uploadArea">
-                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                <div class="bcm-upload-text">Drag and Drop file to upload</div>
-                <div style="margin: 8px 0; color: var(--blue2);">or</div>
-                <button type="button" class="bcm-browse-btn" onclick="document.getElementById('excelFile').click()">Browse</button>
-                <input type="file" id="excelFile" name="excelFile" accept=".xlsx,.xls" onchange="handleFileSelect(event)">
-                <small style="color: var(--blue2); margin-top: 10px; display: block;">Supported format: .XLSX, .XLS</small>
+    </nav>
+    <!-- Hero Section -->
+    <section class="hero-landing">
+        <div class="hero-content">
+            <div class="hero-left">
+                <h1 class="hero-headline">Visualize Your Business Capabilities Instantly</h1>
+                <p class="hero-sub">Turn Excel tables into clean PowerPoint slides in seconds – right in your browser.</p>
+                <a href="#generator" class="hero-cta">Try It Now</a>
             </div>
-            <div class="bcm-upload-list">
-                <div class="bcm-upload-list-title">Uploaded File</div>
-                <div id="fileList"></div>
-                <form id="bcmForm" onsubmit="generatePresentation(event)" enctype="multipart/form-data" class="bcm-form-section">
-                    <div class="row">
-                        <div>
-                            <label for="fontSizeLevel1">Font Size Level 1</label>
-                            <input type="number" id="fontSizeLevel1" value="12" min="6" required>
-                        </div>
-                        <div>
-                            <label for="fontSizeLevel2">Font Size Level 2</label>
-                            <input type="number" id="fontSizeLevel2" value="8" min="6" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label for="colorFillLevel1">Fill Color Level 1</label>
-                            <input type="color" id="colorFillLevel1" value="#3674B5" required>
-                        </div>
-                        <div>
-                            <label for="colorFillLevel2">Fill Color Level 2</label>
-                            <input type="color" id="colorFillLevel2" value="#FADA7A" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label for="textColorLevel1">Text Color Level 1</label>
-                            <input type="color" id="textColorLevel1" value="#FFFFFF" required>
-                        </div>
-                        <div>
-                            <label for="textColorLevel2">Text Color Level 2</label>
-                            <input type="color" id="textColorLevel2" value="#000000" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label for="borderColor">Border Color</label>
-                            <input type="color" id="borderColor" value="#578FCA" required>
-                        </div>
-                        <div>
-                            <label for="widthLevel2">Box Width Level 2 (inches)</label>
-                            <input type="number" id="widthLevel2" value="2.7" min="0.5" step="0.1" required>
-                        </div>
-                        <div>
-                            <label for="heightLevel2">Box Height Level 2 (inches)</label>
-                            <input type="number" id="heightLevel2" value="1.0" min="0.2" step="0.1" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div style="width:100%">
-                            <label for="fontFamily">Font Family</label>
-                            <select id="fontFamily" name="fontFamily" class="bcm-font-select" required>
-                                <option value="Arial" style="font-family:Arial">Arial</option>
-                                <option value="Segoe UI" style="font-family:'Segoe UI'">Segoe UI</option>
-                                <option value="Roboto" style="font-family:Roboto">Roboto</option>
-                                <option value="Times New Roman" style="font-family:'Times New Roman'">Times New Roman</option>
-                                <option value="Courier New" style="font-family:'Courier New'">Courier New</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="generate-btn generate-btn-big generate-btn-full">Generate Presentation</button>
-                </form>
+            <div class="hero-right">
+                <div class="hero-img-placeholder">
+                    <!-- Replace with real image if available -->
+                    <img src="/static/capability_map_preview.png" alt="Sample Capability Map" style="max-width:100%;border-radius:12px;box-shadow:0 4px 24px #0002;" onerror="this.style.display='none'">
+                    <div class="img-fallback" style="display:none;">[ Capability Map Preview ]</div>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Editable Table Section -->
-    <div class="table-section" style="max-width:700px;margin:32px auto 48px auto;background:#fff;border-radius:18px;box-shadow:0 2px 16px #0002;padding:32px 32px 24px 32px;">
-        <h2 style="color:var(--blue1);text-align:center;margin-bottom:1.2em;">Or Enter Data Manually</h2>
-        <div style="overflow-x:auto;">
-            <table id="capabilityTable" style="width:100%;border-collapse:collapse;background:var(--cream);">
-                <thead>
-                    <tr style="background:var(--blue1);color:#fff;">
-                        <th>ID1</th>
-                        <th>ID2</th>
-                        <th>ID3</th>
-                        <th>Level1 Capability</th>
-                        <th>Level2 Capability</th>
-                        <th>Level3 Capability</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 5 empty rows -->
-                    <tr>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:var(--yellow1);"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td contenteditable="true" style="background:#fff;"></td>
-                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
-                </tbody>
-            </table>
+    </section>
+    <!-- How it works Section -->
+    <section id="how-it-works" class="how-section">
+        <h2 class="how-title">How it works</h2>
+        <div class="how-steps">
+            <div class="how-step">
+                <div class="how-icon" style="background:#3674B5;"><i class="fa-solid fa-sliders-h"></i></div>
+                <div class="how-stepnum">Step 1</div>
+                <div class="how-heading">Customize your settings</div>
+                <div class="how-desc">Pick font sizes, colors, and box dimensions for your capability map.</div>
+            </div>
+            <div class="how-step">
+                <div class="how-icon" style="background:#578FCA;"><i class="fa-solid fa-table"></i></div>
+                <div class="how-stepnum">Step 2</div>
+                <div class="how-heading">Upload or enter your capabilities</div>
+                <div class="how-desc">Upload an Excel file or paste your capabilities manually into the table.</div>
+            </div>
+            <div class="how-step">
+                <div class="how-icon" style="background:#FADA7A;"><i class="fa-solid fa-bolt"></i></div>
+                <div class="how-stepnum">Step 3</div>
+                <div class="how-heading">Generate your map</div>
+                <div class="how-desc">Click "Generate" and the app will create a PowerPoint file for you.</div>
+            </div>
+            <div class="how-step">
+                <div class="how-icon" style="background:#F5F0CD;"><i class="fa-solid fa-download"></i></div>
+                <div class="how-stepnum">Step 4</div>
+                <div class="how-heading">Download and use</div>
+                <div class="how-desc">Download your file and use the visualized capability map in your presentation.</div>
+            </div>
         </div>
-        <button type="button" class="add-row-btn" style="margin:18px 0 0 0;background:var(--blue2);color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:1em;cursor:pointer;" onclick="addTableRow()"><i class="fa fa-plus"></i> Add Row</button>
-        <button type="button" class="generate-btn" style="margin-top:18px;" onclick="generateFromTable()">Generate from Table</button>
-    </div>
-    <div class="footer">
-        Made with <span style="color:#FADA7A">&#10084;</span> for business transformation &middot; <a href="#" style="color:var(--blue1);text-decoration:none;">GitHub</a>
+    </section>
+    <!-- Main App Section -->
+    <div id="generator" class="main-card" style="margin-top:64px;">
+        <div class="header">
+            <div class="header-title">🗺️ Business Capability Map Generator</div>
+            <div class="header-sub">Customize your settings, input your data, and generate your map in seconds.</div>
+        </div>
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-title">Customize Your Map</div>
+            <form id="configForm" class="config-grid">
+                <div class="form-group">
+                    <label for="fontSizeLevel1">Font Size Level 1</label>
+                    <input type="number" id="fontSizeLevel1" value="12" min="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="fontSizeLevel2">Font Size Level 2</label>
+                    <input type="number" id="fontSizeLevel2" value="8" min="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="colorFillLevel1">Color Fill Level 1</label>
+                    <input type="color" id="colorFillLevel1" value="#3674B5" required>
+                </div>
+                <div class="form-group">
+                    <label for="colorFillLevel2">Color Fill Level 2</label>
+                    <input type="color" id="colorFillLevel2" value="#FADA7A" required>
+                </div>
+                <div class="form-group">
+                    <label for="textColorLevel1">Text Color Level 1</label>
+                    <input type="color" id="textColorLevel1" value="#FFFFFF" required>
+                </div>
+                <div class="form-group">
+                    <label for="textColorLevel2">Text Color Level 2</label>
+                    <input type="color" id="textColorLevel2" value="#000000" required>
+                </div>
+                <div class="form-group">
+                    <label for="borderColor">Border Color</label>
+                    <input type="color" id="borderColor" value="#578FCA">
+                </div>
+                <div class="form-group">
+                    <label for="borderWidth">Border Width</label>
+                    <input type="number" id="borderWidth" value="0" min="0" step="0.5">
+                </div>
+                <div class="form-group">
+                    <label for="widthLevel2">Box Width Level 2 (inches)</label>
+                    <input type="number" id="widthLevel2" value="2.7" min="0.5" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="heightLevel2">Box Height Level 2 (inches)</label>
+                    <input type="number" id="heightLevel2" value="1.0" min="0.2" step="0.1" required>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="fontFamily">Font Family</label>
+                    <select id="fontFamily" name="fontFamily" class="bcm-font-select" required>
+                        <option value="Arial" style="font-family:Arial">Arial</option>
+                        <option value="Segoe UI" style="font-family:'Segoe UI'">Segoe UI</option>
+                        <option value="Roboto" style="font-family:Roboto">Roboto</option>
+                        <option value="Times New Roman" style="font-family:'Times New Roman'">Times New Roman</option>
+                        <option value="Courier New" style="font-family:'Courier New'">Courier New</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-title">Input Your Capability Data</div>
+            <div class="input-options">
+                <!-- Excel Upload -->
+                <div class="excel-upload">
+                    <div class="bcm-upload-drop" id="uploadArea">
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                        <div class="bcm-upload-text">Upload Excel File (.xlsx)</div>
+                        <div style="margin: 8px 0; color: var(--secondary);">or</div>
+                        <button type="button" class="bcm-browse-btn" onclick="document.getElementById('excelFile').click()">Browse</button>
+                        <input type="file" id="excelFile" name="excelFile" accept=".xlsx,.xls" onchange="handleFileSelect(event)">
+                        <small style="color: var(--secondary); margin-top: 10px; display: block;">Supported format: .XLSX, .XLS</small>
+                    </div>
+                    <div class="bcm-upload-list">
+                        <div class="bcm-upload-list-title">Uploaded File</div>
+                        <div id="fileList"></div>
+                        <form id="bcmForm" onsubmit="generatePresentation(event)" enctype="multipart/form-data" class="bcm-form-section">
+                            <button type="submit" class="generate-btn" style="margin-top:18px;width:100%;">Generate from File</button>
+                        </form>
+                        <div id="upload-loading" class="spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i><br><span>Generating PowerPoint...</span></div>
+                        <div id="upload-download" style="display:none;text-align:center;margin-top:18px;"></div>
+                    </div>
+                </div>
+                <div class="or-separator">
+                    <div>OR</div>
+                </div>
+                <!-- Manual Table -->
+                <div class="manual-table">
+                    <div class="table-wrapper">
+                        <table id="capabilityTable">
+                            <thead>
+                                <tr>
+                                    <th>ID1</th>
+                                    <th>ID2</th>
+                                    <th>ID3</th>
+                                    <th>Level1 Capability</th>
+                                    <th>Level2 Capability</th>
+                                    <th>Level3 Capability</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:var(--yellow);"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td contenteditable="true" style="background:#fff;"></td>
+                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="button-row">
+                        <button type="button" class="add-row-btn" onclick="addTableRow()"><i class="fa fa-plus"></i> Add Row</button>
+                        <button type="button" class="generate-btn" style="margin-left:auto;" onclick="generateFromTable()">Generate from Table</button>
+                    </div>
+                    <div id="table-loading" class="spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i><br><span>Generating PowerPoint...</span></div>
+                    <div id="table-download" style="display:none;text-align:center;margin-top:18px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Step 3 is handled by the output areas in each option -->
+        <footer class="footer">
+            Made with <span style="color:#FADA7A">&#10084;</span> for business transformation &middot; <a href="#" style="color:var(--primary);text-decoration:none;"><i class="fa-brands fa-github"></i> GitHub</a>
+        </footer>
     </div>
     <script>
     let uploadedFile = null;
@@ -528,55 +900,82 @@
     // Initial render
     renderFileList();
 
-    async function generatePresentation(event) {
+    const oldGeneratePresentation = window.generatePresentation;
+    window.generatePresentation = async function(event) {
         event.preventDefault();
-        if (!uploadedFile) {
-            alert('Please upload an Excel file.');
-            return;
+        document.getElementById('upload-loading').style.display = 'block';
+        document.getElementById('upload-download').style.display = 'none';
+        const form = document.getElementById('bcmForm');
+        const formData = new FormData(form);
+        // Stelle sicher, dass die Datei explizit angehängt wird
+        const fileInput = document.getElementById('excelFile');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.set('excelFile', fileInput.files[0]);
         }
-        const formData = new FormData();
-        formData.append('fontSizeLevel1', document.getElementById('fontSizeLevel1').value);
-        formData.append('fontSizeLevel2', document.getElementById('fontSizeLevel2').value);
-        formData.append('colorFillLevel1', document.getElementById('colorFillLevel1').value);
-        formData.append('colorFillLevel2', document.getElementById('colorFillLevel2').value);
-        formData.append('textColorLevel1', document.getElementById('textColorLevel1').value);
-        formData.append('textColorLevel2', document.getElementById('textColorLevel2').value);
-        formData.append('borderColor', document.getElementById('borderColor').value);
-        formData.append('widthLevel2', document.getElementById('widthLevel2').value);
-        formData.append('heightLevel2', document.getElementById('heightLevel2').value);
-        formData.append('fontFamily', document.getElementById('fontFamily').value);
-        formData.append('excelFile', uploadedFile);
+        // Füge Style-Felder hinzu
+        [
+            'fontSizeLevel1', 'fontSizeLevel2', 'colorFillLevel1', 'colorFillLevel2',
+            'textColorLevel1', 'textColorLevel2', 'borderColor', 'widthLevel2', 'heightLevel2'
+        ].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) formData.set(id, el.value);
+        });
         try {
             const response = await fetch('/generate', {
                 method: 'POST',
                 body: formData
             });
             const result = await response.json();
-            if (response.ok) {
-                alert(result.message);
+            document.getElementById('upload-loading').style.display = 'none';
+            if (response.ok && result.success && result.download_url) {
+                document.getElementById('upload-download').innerHTML = `<a href="${result.download_url}" class="generate-btn" style="display:inline-block;" download>Download your PPT</a>`;
+                document.getElementById('upload-download').style.display = 'block';
             } else {
-                alert(result.message + (result.error ? ('\n' + result.error) : ''));
+                document.getElementById('upload-download').innerHTML = `<span style="color:#e53935;">${result.message || 'Error'}</span>`;
+                document.getElementById('upload-download').style.display = 'block';
             }
-            console.log(result);
         } catch (err) {
-            alert('Network or server error.');
+            document.getElementById('upload-loading').style.display = 'none';
+            document.getElementById('upload-download').innerHTML = `<span style="color:#e53935;">Network or server error.</span>`;
+            document.getElementById('upload-download').style.display = 'block';
             console.error(err);
         }
     }
 
-    function addTableRow() {
+    // Copy-paste handler for table
+    document.getElementById('capabilityTable').addEventListener('paste', function(e) {
+        const clipboard = e.clipboardData || window.clipboardData;
+        const text = clipboard.getData('text');
+        if (text && text.includes('\t')) {
+            e.preventDefault();
+            const rows = text.split(/\r?\n/).filter(r => r.trim() !== '');
+            const startCell = document.activeElement;
+            let startRow = startCell.parentElement;
+            let tbody = startRow.parentElement;
+            let rowIndex = Array.from(tbody.children).indexOf(startRow);
+            rows.forEach((rowText, i) => {
+                let cells = rowText.split('\t');
+                let tr = tbody.children[rowIndex + i] || addTableRow(true);
+                for (let j = 0; j < Math.min(cells.length, 6); j++) {
+                    tr.children[j].innerText = cells[j];
+                }
+            });
+        }
+    });
+    function addTableRow(returnTr) {
         const tbody = document.querySelector('#capabilityTable tbody');
         const tr = document.createElement('tr');
         for (let i = 0; i < 6; i++) {
             const td = document.createElement('td');
             td.contentEditable = true;
-            td.style.background = (i < 3) ? 'var(--yellow1)' : '#fff';
+            td.style.background = (i < 3) ? 'var(--yellow)' : '#fff';
             tr.appendChild(td);
         }
         const tdDelete = document.createElement('td');
         tdDelete.innerHTML = "<button type='button' class='delete-row-btn' onclick='deleteTableRow(this)'><i class='fa fa-trash'></i></button>";
         tr.appendChild(tdDelete);
         tbody.appendChild(tr);
+        if (returnTr) return tr;
     }
     function deleteTableRow(btn) {
         const row = btn.closest('tr');
@@ -619,6 +1018,8 @@
             tableData: tableData,
             ...styleFields
         };
+        document.getElementById('table-loading').style.display = 'block';
+        document.getElementById('table-download').style.display = 'none';
         try {
             const response = await fetch('/generate-from-table', {
                 method: 'POST',
@@ -626,17 +1027,34 @@
                 body: JSON.stringify(payload)
             });
             const result = await response.json();
-            if (response.ok) {
-                alert(result.message);
+            document.getElementById('table-loading').style.display = 'none';
+            if (response.ok && result.success && result.download_url) {
+                document.getElementById('table-download').innerHTML = `<a href="${result.download_url}" class="generate-btn" style="display:inline-block;" download>Download your PPT</a>`;
+                document.getElementById('table-download').style.display = 'block';
             } else {
-                alert(result.message + (result.error ? ('\n' + result.error) : ''));
+                document.getElementById('table-download').innerHTML = `<span style="color:#e53935;">${result.message || 'Error'}</span>`;
+                document.getElementById('table-download').style.display = 'block';
             }
-            console.log(result);
         } catch (err) {
-            alert('Network or server error.');
+            document.getElementById('table-loading').style.display = 'none';
+            document.getElementById('table-download').innerHTML = `<span style="color:#e53935;">Network or server error.</span>`;
+            document.getElementById('table-download').style.display = 'block';
             console.error(err);
         }
     }
+    // Smooth scroll for anchor links
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    });
     </script>
 </body>
 </html>

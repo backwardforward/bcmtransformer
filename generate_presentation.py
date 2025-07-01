@@ -21,6 +21,7 @@ def parse_args():
     parser.add_argument('--widthLevel2', type=float, required=True)
     parser.add_argument('--heightLevel2', type=float, required=True)
     parser.add_argument('--excelPath', type=str, required=False, default=None)
+    parser.add_argument('--outputPath', type=str, required=False, default=None)
     return parser.parse_args()
 
 def hex_to_rgb(hex_color):
@@ -30,7 +31,7 @@ def hex_to_rgb(hex_color):
 def add_colored_box(slide, left, top, width, height, text, fill_color, border_color, border_width, font_size, bold, text_color, align_left_top=False):
     try:
         shape = slide.shapes.add_shape(
-            MSO_SHAPE.RECTANGLE, left, top, width, height
+            MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height
         )
         rgb_fill = RGBColor(*hex_to_rgb(fill_color))
         shape.fill.solid()
@@ -38,6 +39,9 @@ def add_colored_box(slide, left, top, width, height, text, fill_color, border_co
         rgb_border = RGBColor(*hex_to_rgb(border_color))
         shape.line.color.rgb = rgb_border
         shape.line.width = Pt(border_width)
+        # Make border invisible if border_color is None or border_width is 0
+        if not border_color or border_width == 0:
+            shape.line.fill.background()
         shape.text = text
         text_frame = shape.text_frame
         for p in text_frame.paragraphs:
@@ -52,6 +56,11 @@ def add_colored_box(slide, left, top, width, height, text, fill_color, border_co
             text_frame.vertical_anchor = MSO_ANCHOR.TOP
         else:
             text_frame.paragraphs[0].alignment = 1  # center
+        # Make corners a little more rounded
+        try:
+            shape.adjustments[0] = 0.03
+        except Exception:
+            pass
         return shape
     except Exception as e:
         logging.error(f"Error in add_colored_box: {e}")
@@ -119,17 +128,30 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
                 l2_text, args.colorFillLevel2, args.borderColor, 1.5, args.fontSizeLevel2, False, args.textColorLevel2, align_left_top=True
             )
 
-def generate_from_dataframe(df, args):
+def generate_from_dataframe(df, args, output_path=None):
     # Spaltennamen im DataFrame normalisieren!
     df.columns = [c.strip().upper().replace(' ', '_') for c in df.columns]
+    # Mapping für Spaltennamen aus dem Frontend
+    col_map = {
+        "ID1": "ID_1",
+        "ID2": "ID_2",
+        "ID3": "ID_3",
+        "LEVEL1_CAPABILITY": "LEVEL_1_CAPABILITY",
+        "LEVEL2_CAPABILITY": "LEVEL_2_CAPABILITY",
+        "LEVEL3_CAPABILITY": "LEVEL_3_CAPABILITY"
+    }
+    df = df.rename(columns=col_map)
     prs = Presentation()
     prs.slide_width = Inches(13.33)
     prs.slide_height = Inches(7.5)
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_business_capabilities(slide, df, args, prs.slide_width, prs.slide_height)
-    output_dir = os.path.join(os.path.dirname(__file__), 'output')
-    os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, 'Business_Capability_Map.pptx')
+    if output_path is None:
+        output_dir = os.path.join(os.path.dirname(__file__), 'output')
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, 'Business_Capability_Map.pptx')
+    else:
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
     prs.save(output_path)
     logging.info(f"Saved presentation to {output_path}")
     print(f"Saved presentation to {output_path}")
@@ -142,7 +164,12 @@ def main():
         logging.error(f"Excel file not found: {excel_path}")
         return
     df = pd.read_excel(excel_path)
-    generate_from_dataframe(df, args)
+    output_path = args.outputPath
+    if output_path is None:
+        output_dir = os.path.join(os.path.dirname(__file__), 'output')
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, 'Business_Capability_Map.pptx')
+    generate_from_dataframe(df, args, output_path=output_path)
 
 if __name__ == "__main__":
     main()
