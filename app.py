@@ -82,44 +82,6 @@ def generate():
             "error": e.stderr.strip()
         }), 500
 
-@app.route("/generate-from-table", methods=["POST"])
-def generate_from_table():
-    data = request.get_json()
-    if not data or 'tableData' not in data:
-        return jsonify({"success": False, "message": "No table data provided."}), 400
-    table_data = data['tableData']
-    df = pd.DataFrame(table_data)
-    args_dict = {key: data.get(key) for key in REQUIRED_FIELDS}
-    class Args:
-        def __init__(self, d):
-            for k, v in d.items():
-                setattr(self, k, v)
-    args = Args(args_dict)
-    try:
-        # Generiere eindeutigen Dateinamen
-        ts = datetime.now().strftime('%Y%m%d_%H%M%S')
-        unique_id = uuid.uuid4().hex[:8]
-        filename = f"capability_map_{ts}_{unique_id}.pptx"
-        # Ensure static_folder is a string
-        static_folder = app.static_folder or os.path.join(os.path.dirname(__file__), 'static')
-        output_dir = os.path.join(static_folder, 'generated')
-        os.makedirs(output_dir, exist_ok=True)
-        output_path = os.path.join(output_dir, filename)
-        # PPTX generieren
-        generate_from_dataframe(df, args, output_path=output_path)
-        download_url = f"/static/generated/{filename}"
-        return jsonify({
-            "success": True,
-            "download_url": download_url
-        })
-    except Exception as e:
-        logging.error(f"Error: {e}")
-        return jsonify({
-            "success": False,
-            "message": "Error generating presentation from table.",
-            "error": str(e)
-        }), 500
-
 def main():
     app.run(host='0.0.0.0', port=5000, debug=True)
 
