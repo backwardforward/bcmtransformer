@@ -577,6 +577,19 @@
             align-items: center;
             min-width: 180px;
             max-width: 260px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(.4,1.2,.4,1), box-shadow 0.2s cubic-bezier(.4,1.2,.4,1);
+            outline: none;
+        }
+        .how-step:hover, .how-step:focus-visible {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 24px #0002;
+        }
+        @media (hover: none) and (pointer: coarse), (max-width: 700px) {
+            .how-step:hover, .how-step:focus-visible {
+                transform: none;
+                box-shadow: 0 2px 16px #0001;
+            }
         }
         .how-icon {
             width: 54px;
@@ -621,6 +634,229 @@
             }
             .how-step { max-width: 340px; width: 100%; }
         }
+        .why-section {
+            width: 100%;
+            background: linear-gradient(120deg, #FADA7A 0%, #F5F0CD 100%);
+            padding: 80px 0 90px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #f5e6b0;
+            margin-top: 0;
+            gap: 44px;
+        }
+        .why-block {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+        .why-block-content {
+            display: flex;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 6px 32px #0002;
+            padding: 48px 44px;
+            align-items: center;
+            gap: 48px;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 260px;
+            position: relative;
+        }
+        .why-block-text-left { flex-direction: row; }
+        .why-block-text-right { flex-direction: row-reverse; }
+        .why-block-text {
+            flex: 1 1 340px;
+            min-width: 260px;
+            max-width: 420px;
+            text-align: left;
+        }
+        .why-block-headline {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 0.7em;
+            letter-spacing: -1px;
+        }
+        .why-block-text p {
+            font-size: 1.15rem;
+            color: #444;
+            margin-bottom: 0;
+        }
+        .why-block-visual {
+            flex: 1 1 320px;
+            min-width: 220px;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        /* Mockups and playful annotation styles */
+        .why-mockup {
+            background: #F5F0CD;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #fada7a55;
+            padding: 28px 24px 20px 24px;
+            width: 100%;
+            max-width: 340px;
+            position: relative;
+            font-family: 'Inter', 'Open Sans', Arial, sans-serif;
+        }
+        .mockup-header {
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .mockup-body {
+            font-size: 1em;
+            color: #444;
+        }
+        .mockup-row { margin-bottom: 7px; }
+        .mockup-label { color: #578FCA; font-weight: 600; }
+        .mockup-annotate {
+            color: #e53935;
+            font-weight: 700;
+            background: #fffbe6;
+            border-radius: 8px;
+            padding: 2px 8px;
+            box-shadow: 0 1px 4px #fada7a33;
+            position: relative;
+        }
+        .mockup-arrow {
+            color: #e53935;
+            font-size: 1.2em;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .why-mockup-excelppt {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+        }
+        .mockup-excel, .mockup-ppt {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 8px #578fca22;
+            padding: 12px 18px;
+            min-width: 80px;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .mockup-excel-title {
+            font-weight: 700;
+            color: #3674B5;
+            margin-bottom: 6px;
+        }
+        .mockup-excel-row { color: #444; font-size: 1em; }
+        .mockup-ppt-title {
+            font-weight: 700;
+            color: #FADA7A;
+            margin-bottom: 6px;
+        }
+        .mockup-ppt-slide {
+            background: #FADA7A;
+            color: #b07a00;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.98em;
+            margin-top: 4px;
+        }
+        .mockup-arrow-handdrawn {
+            font-size: 2.2em;
+            color: #e53935;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            margin: 0 10px;
+            transform: rotate(-10deg);
+            text-shadow: 1px 2px 0 #fffbe6;
+        }
+        .mockup-annotation {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-6deg);
+            background: #fffbe6;
+            color: #e53935;
+            font-size: 1em;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            padding: 3px 14px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px #fada7a33;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .why-mockup-flow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        .mockup-flow-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 8px #578fca22;
+            padding: 12px 18px;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #3674B5;
+            min-width: 80px;
+            text-align: center;
+        }
+        .mockup-flow-item.webapp { background: #FADA7A; color: #b07a00; }
+        .mockup-flow-arrow {
+            font-size: 2em;
+            color: #578FCA;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            margin: 0 6px;
+            vertical-align: middle;
+        }
+        .mockup-flow-label {
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            background: #fffbe6;
+            color: #3674B5;
+            font-size: 1em;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            padding: 3px 14px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px #fada7a33;
+            z-index: 2;
+            pointer-events: none;
+        }
+        /* Scroll reveal animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s cubic-bezier(.4,1.2,.4,1), transform 0.8s cubic-bezier(.4,1.2,.4,1);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: none;
+        }
+        @media (max-width: 1100px) {
+            .why-block-content { padding: 32px 10px; gap: 18px; }
+        }
+        @media (max-width: 900px) {
+            .why-section { padding: 44px 0 60px 0; gap: 24px; }
+            .why-block-content { flex-direction: column !important; gap: 18px; min-height: 0; }
+            .why-block-text, .why-block-visual { max-width: 100%; min-width: 0; text-align: center; }
+            .why-block-headline { font-size: 1.15rem; }
+            .why-block-text p { font-size: 1em; }
+        }
+        @media (max-width: 600px) {
+            .why-section { padding: 24px 0 36px 0; }
+            .why-block-content { padding: 16px 2px; }
+            .why-block-headline { font-size: 1em; }
+        }
     </style>
 </head>
 <body>
@@ -630,6 +866,7 @@
         <div class="nav-right">
             <a href="#how-it-works" class="nav-link">How it works</a>
             <a href="#generator" class="nav-link">Try it now</a>
+            <a href="#why" class="nav-link">Why the Tool</a>
             <a href="https://github.com/backwardforward/bcmtransformer" class="nav-link" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
         </div>
     </nav>
@@ -654,25 +891,25 @@
     <section id="how-it-works" class="how-section">
         <h2 class="how-title">How it works</h2>
         <div class="how-steps">
-            <div class="how-step">
+            <div class="how-step" tabindex="0" data-target="#customize">
                 <div class="how-icon" style="background:#3674B5;"><i class="fa-solid fa-sliders-h"></i></div>
                 <div class="how-stepnum">Step 1</div>
                 <div class="how-heading">Customize your settings</div>
                 <div class="how-desc">Pick font sizes, colors, and box dimensions for your capability map.</div>
             </div>
-            <div class="how-step">
+            <div class="how-step" tabindex="0" data-target="#input">
                 <div class="how-icon" style="background:#578FCA;"><i class="fa-solid fa-table"></i></div>
                 <div class="how-stepnum">Step 2</div>
                 <div class="how-heading">Upload or enter your capabilities</div>
                 <div class="how-desc">Upload an Excel file or paste your capabilities manually into the table.</div>
             </div>
-            <div class="how-step">
+            <div class="how-step" tabindex="0" data-target="#input">
                 <div class="how-icon" style="background:#FADA7A;"><i class="fa-solid fa-bolt"></i></div>
                 <div class="how-stepnum">Step 3</div>
                 <div class="how-heading">Generate your map</div>
                 <div class="how-desc">Click "Generate" and the app will create a PowerPoint file for you.</div>
             </div>
-            <div class="how-step">
+            <div class="how-step" tabindex="0" data-target="#input">
                 <div class="how-icon" style="background:#F5F0CD;"><i class="fa-solid fa-download"></i></div>
                 <div class="how-stepnum">Step 4</div>
                 <div class="how-heading">Download and use</div>
@@ -687,6 +924,7 @@
             <div class="header-sub">Customize your settings, input your data, and generate your map in seconds.</div>
         </div>
         <!-- Step 1 -->
+        <div id="customize"></div>
         <div class="step">
             <div class="step-number">1</div>
             <div class="step-title">Customize Your Map</div>
@@ -744,6 +982,7 @@
             </form>
         </div>
         <!-- Step 2 -->
+        <div id="input"></div>
         <div class="step">
             <div class="step-number">2</div>
             <div class="step-title">Input Your Capability Data</div>
@@ -849,6 +1088,70 @@
             Made with <span style="color:#FADA7A">&#10084;</span> for business transformation &middot; <a href="#" style="color:var(--primary);text-decoration:none;"><i class="fa-brands fa-github"></i> GitHub</a>
         </footer>
     </div>
+    <!-- Why the Tool Section -->
+    <section id="why" class="why-section">
+        <div class="why-block why-block-1 reveal-on-scroll">
+            <div class="why-block-content why-block-text-left">
+                <div class="why-block-text">
+                    <h3 class="why-block-headline">Enterprise Architecture Tools are powerful, but slow to configure.</h3>
+                    <p>Most tools require setup, configuration, onboarding, and still don't output what C-Level wants: a clean, high-level slide.</p>
+                </div>
+                <div class="why-block-visual">
+                    <div class="why-mockup why-mockup-config">
+                        <div class="mockup-header">EAM Tool Setup</div>
+                        <div class="mockup-body">
+                            <div class="mockup-row"><span class="mockup-label">Step 1:</span> Create metamodel</div>
+                            <div class="mockup-row"><span class="mockup-label">Step 2:</span> Import data</div>
+                            <div class="mockup-row"><span class="mockup-label">Step 3:</span> Configure views</div>
+                            <div class="mockup-row"><span class="mockup-label">Step 4:</span> <span class="mockup-annotate">Still no PPT export <span class="mockup-arrow">→</span></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="why-block why-block-2 reveal-on-scroll">
+            <div class="why-block-content why-block-text-right">
+                <div class="why-block-visual">
+                    <div class="why-mockup why-mockup-excelppt">
+                        <div class="mockup-excel">
+                            <div class="mockup-excel-title">Excel</div>
+                            <div class="mockup-excel-row">Capability 1</div>
+                            <div class="mockup-excel-row">Capability 2</div>
+                            <div class="mockup-excel-row">...</div>
+                        </div>
+                        <div class="mockup-arrow-handdrawn">→</div>
+                        <div class="mockup-ppt">
+                            <div class="mockup-ppt-title">PowerPoint</div>
+                            <div class="mockup-ppt-slide">[ Messy Slide ]</div>
+                        </div>
+                        <div class="mockup-annotation">Copy/Paste hell</div>
+                    </div>
+                </div>
+                <div class="why-block-text">
+                    <h3 class="why-block-headline">You'll end up in PowerPoint anyway.</h3>
+                    <p>Even in high-end projects, capability data from Excel often ends up manually copied into slides. That's inefficient and error-prone.</p>
+                </div>
+            </div>
+        </div>
+        <div class="why-block why-block-3 reveal-on-scroll">
+            <div class="why-block-content why-block-text-left">
+                <div class="why-block-text">
+                    <h3 class="why-block-headline">This tool automates that last mile – safely and instantly.</h3>
+                    <p>It takes your structured Excel data or table input and turns it into a PowerPoint file – locally in your browser, with no external upload.</p>
+                </div>
+                <div class="why-block-visual">
+                    <div class="why-mockup why-mockup-flow">
+                        <div class="mockup-flow-item excel">Excel</div>
+                        <div class="mockup-flow-arrow">→</div>
+                        <div class="mockup-flow-item webapp">Web App</div>
+                        <div class="mockup-flow-arrow">→</div>
+                        <div class="mockup-flow-item ppt">PowerPoint Slide</div>
+                        <div class="mockup-flow-label">Secure, local, presentation-ready.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script>
     let uploadedFile = null;
 
@@ -1054,6 +1357,36 @@
                 }
             });
         });
+    });
+    // How it works: clickable step cards with smooth scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.how-step[data-target]').forEach(card => {
+            card.addEventListener('click', function() {
+                const target = document.querySelector(this.getAttribute('data-target'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('data-target'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    });
+    // Fade-in effect for Why section blocks
+    document.addEventListener('DOMContentLoaded', function() {
+        function revealBlocks() {
+            document.querySelectorAll('.reveal-on-scroll').forEach(function(block) {
+                var rect = block.getBoundingClientRect();
+                var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                if (rect.top < windowHeight - 80) {
+                    block.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealBlocks);
+        revealBlocks();
     });
     </script>
 </body>
