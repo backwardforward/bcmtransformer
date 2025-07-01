@@ -279,6 +279,34 @@
         .bcm-font-select:focus {
             outline: 2px solid var(--blue2);
         }
+        .delete-row-btn {
+            background: none;
+            border: none;
+            color: #e53935;
+            font-size: 1.1em;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .delete-row-btn:hover {
+            background: #ffeaea;
+        }
+        .add-row-btn:hover {
+            background: var(--blue1);
+        }
+        #capabilityTable th, #capabilityTable td {
+            border: 1px solid var(--blue2);
+            padding: 8px 6px;
+            text-align: left;
+        }
+        #capabilityTable th {
+            background: var(--blue1);
+            color: #fff;
+        }
+        #capabilityTable td:empty:before {
+            content: '\00a0';
+        }
     </style>
 </head>
 <body>
@@ -377,6 +405,75 @@
             </div>
         </div>
     </div>
+    <!-- Editable Table Section -->
+    <div class="table-section" style="max-width:700px;margin:32px auto 48px auto;background:#fff;border-radius:18px;box-shadow:0 2px 16px #0002;padding:32px 32px 24px 32px;">
+        <h2 style="color:var(--blue1);text-align:center;margin-bottom:1.2em;">Or Enter Data Manually</h2>
+        <div style="overflow-x:auto;">
+            <table id="capabilityTable" style="width:100%;border-collapse:collapse;background:var(--cream);">
+                <thead>
+                    <tr style="background:var(--blue1);color:#fff;">
+                        <th>ID1</th>
+                        <th>ID2</th>
+                        <th>ID3</th>
+                        <th>Level1 Capability</th>
+                        <th>Level2 Capability</th>
+                        <th>Level3 Capability</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 5 empty rows -->
+                    <tr>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:var(--yellow1);"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td contenteditable="true" style="background:#fff;"></td>
+                        <td><button type="button" class="delete-row-btn" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="add-row-btn" style="margin:18px 0 0 0;background:var(--blue2);color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:1em;cursor:pointer;" onclick="addTableRow()"><i class="fa fa-plus"></i> Add Row</button>
+        <button type="button" class="generate-btn" style="margin-top:18px;" onclick="generateFromTable()">Generate from Table</button>
+    </div>
     <div class="footer">
         Made with <span style="color:#FADA7A">&#10084;</span> for business transformation &middot; <a href="#" style="color:var(--blue1);text-decoration:none;">GitHub</a>
     </div>
@@ -453,6 +550,80 @@
             const response = await fetch('/generate', {
                 method: 'POST',
                 body: formData
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                alert(result.message + (result.error ? ('\n' + result.error) : ''));
+            }
+            console.log(result);
+        } catch (err) {
+            alert('Network or server error.');
+            console.error(err);
+        }
+    }
+
+    function addTableRow() {
+        const tbody = document.querySelector('#capabilityTable tbody');
+        const tr = document.createElement('tr');
+        for (let i = 0; i < 6; i++) {
+            const td = document.createElement('td');
+            td.contentEditable = true;
+            td.style.background = (i < 3) ? 'var(--yellow1)' : '#fff';
+            tr.appendChild(td);
+        }
+        const tdDelete = document.createElement('td');
+        tdDelete.innerHTML = "<button type='button' class='delete-row-btn' onclick='deleteTableRow(this)'><i class='fa fa-trash'></i></button>";
+        tr.appendChild(tdDelete);
+        tbody.appendChild(tr);
+    }
+    function deleteTableRow(btn) {
+        const row = btn.closest('tr');
+        row.parentNode.removeChild(row);
+    }
+    function getTableData() {
+        const rows = document.querySelectorAll('#capabilityTable tbody tr');
+        const data = [];
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if ([...cells].slice(0,6).some(cell => cell.innerText.trim() !== '')) {
+                data.push({
+                    'ID1': cells[0].innerText.trim(),
+                    'ID2': cells[1].innerText.trim(),
+                    'ID3': cells[2].innerText.trim(),
+                    'Level1 Capability': cells[3].innerText.trim(),
+                    'Level2 Capability': cells[4].innerText.trim(),
+                    'Level3 Capability': cells[5].innerText.trim()
+                });
+            }
+        });
+        return data;
+    }
+    async function generateFromTable() {
+        const tableData = getTableData();
+        if (tableData.length === 0) {
+            alert('Please fill in at least one row of the table.');
+            return;
+        }
+        // Collect style fields from the form
+        const styleFields = {};
+        [
+            'fontSizeLevel1', 'fontSizeLevel2', 'colorFillLevel1', 'colorFillLevel2',
+            'textColorLevel1', 'textColorLevel2', 'borderColor', 'widthLevel2', 'heightLevel2'
+        ].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) styleFields[id] = el.value;
+        });
+        const payload = {
+            tableData: tableData,
+            ...styleFields
+        };
+        try {
+            const response = await fetch('/generate-from-table', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
             const result = await response.json();
             if (response.ok) {

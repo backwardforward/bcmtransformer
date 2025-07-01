@@ -119,13 +119,7 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
                 l2_text, args.colorFillLevel2, args.borderColor, 1.5, args.fontSizeLevel2, False, args.textColorLevel2, align_left_top=True
             )
 
-def main():
-    args = parse_args()
-    excel_path = args.excelPath or os.path.join(os.path.dirname(__file__), 'excel_data', 'bcm_test_source.xlsx')
-    if not os.path.exists(excel_path):
-        logging.error(f"Excel file not found: {excel_path}")
-        return
-    df = pd.read_excel(excel_path)
+def generate_from_dataframe(df, args):
     # Spaltennamen im DataFrame normalisieren!
     df.columns = [c.strip().upper().replace(' ', '_') for c in df.columns]
     prs = Presentation()
@@ -139,6 +133,16 @@ def main():
     prs.save(output_path)
     logging.info(f"Saved presentation to {output_path}")
     print(f"Saved presentation to {output_path}")
+    return output_path
+
+def main():
+    args = parse_args()
+    excel_path = args.excelPath or os.path.join(os.path.dirname(__file__), 'excel_data', 'bcm_test_source.xlsx')
+    if not os.path.exists(excel_path):
+        logging.error(f"Excel file not found: {excel_path}")
+        return
+    df = pd.read_excel(excel_path)
+    generate_from_dataframe(df, args)
 
 if __name__ == "__main__":
     main()

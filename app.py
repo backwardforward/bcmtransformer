@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from pptx import Presentation
 from pptx.util import Inches, Cm, Pt
+from generate_presentation import generate_from_dataframe
+import pandas as pd
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
@@ -69,6 +71,33 @@ def generate():
             "error": e.stderr.strip()
         }), 500
 
+@app.route("/generate-from-table", methods=["POST"])
+def generate_from_table():
+    data = request.get_json()
+    if not data or 'tableData' not in data:
+        return jsonify({"message": "No table data provided."}), 400
+    table_data = data['tableData']
+    # Expecting a list of dicts, each dict is a row
+    df = pd.DataFrame(table_data)
+    # Get style args from data (same as REQUIRED_FIELDS)
+    args_dict = {key: data.get(key) for key in REQUIRED_FIELDS}
+    class Args:
+        def __init__(self, d):
+            for k, v in d.items():
+                setattr(self, k, v)
+    args = Args(args_dict)
+    try:
+        output_path = generate_from_dataframe(df, args)
+        return jsonify({
+            "message": "Presentation generated successfully from table.",
+            "output": output_path
+        })
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        return jsonify({
+            "message": "Error generating presentation from table.",
+            "error": str(e)
+        }), 500
 
 def main():
     app.run(host='0.0.0.0', port=5000, debug=True)
