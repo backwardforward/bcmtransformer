@@ -164,7 +164,7 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             return h + 2*(box_padding or 0) + (l1_box_text_height or 0)
 
     # 3. Recursively draw boxes
-    def draw_node_scaled(node, level, left, top, width, scaling):
+    def draw_node_scaled(node, level, left, top, width, scaling, l3_height=None):
         scaling_f = float(scaling) if scaling is not None else 1.0
         if level == 1:
             l1_row = node['row']
@@ -209,7 +209,7 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             bottom_margin = Cm(BOTTOM_MARGIN_CM)
             header_reserved = l2_box_text_height * 0.7
             if num_l3 > 0:
-                height = header_reserved + top_padding + num_l3 * (height_l3 + padding) - padding + bottom_margin
+                height = header_reserved + top_padding + num_l3 * Cm(0.7) + (num_l3 - 1) * Cm(0.08) + bottom_margin
             else:
                 height = l2_box_min_height
             height = float(height)
@@ -217,15 +217,20 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
                 slide, left, top, width, height,
                 l2_text, args.colorFillLevel2, args.borderColor, 1.5, args.fontSizeLevel2 + 1, True, args.textColorLevel2, align_left_top=True
             )
+            # Dynamisch berechnete L3-Höhe
+            if num_l3 > 0:
+                available_for_l3 = height - header_reserved - top_padding - bottom_margin - (num_l3 - 1) * Cm(0.08)
+                l3_height = available_for_l3 / num_l3
+            else:
+                l3_height = Cm(0.7)
             # Place L3s strictly inside L2, below the title
             l3_left = left + max(min_padding or 0, scaling_f * (child_left_pad or 0))
             l3_width = width - 2 * max(min_padding or 0, scaling_f * (child_left_pad or 0))
             y = top + header_reserved + top_padding
             for l3_id, l3_nodes in children.items():
                 for l3_node in l3_nodes:
-                    l3_height = float(height_l3)
-                    draw_node_scaled(l3_node, 3, l3_left, y, l3_width, scaling_f)
-                    y += l3_height + float(padding)
+                    draw_node_scaled(l3_node, 3, l3_left, y, l3_width, scaling_f, l3_height)
+                    y += l3_height + Cm(0.08)
             return height
         elif level == 3:
             l3_row = node['row']
@@ -233,10 +238,13 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             l2_num = str(l3_row[level2_col])
             l3_num = str(l3_row[level3_col])
             l3_text = f"{l1_num}.{l2_num}.{l3_num} {l3_row[subsubcapability_col]}"
-            l3_min_height = float(l3_box_min_height) if l3_box_min_height is not None else 0.0
-            l3_natural = float((l3_box_text_height if l3_box_text_height is not None else 0.0) + 2*(box_padding if box_padding is not None else 0.0))
-            scaling_f = float(scaling_f) if scaling_f is not None else 1.0
-            height = max(float(l3_min_height), float(scaling_f * l3_natural))
+            if l3_height is not None:
+                height = float(l3_height)
+            else:
+                l3_min_height = float(l3_box_min_height) if l3_box_min_height is not None else 0.0
+                l3_natural = float((l3_box_text_height if l3_box_text_height is not None else 0.0) + 2*(box_padding if box_padding is not None else 0.0))
+                scaling_f = float(scaling_f) if scaling_f is not None else 1.0
+                height = max(float(l3_min_height), float(scaling_f * l3_natural))
             add_colored_box(
                 slide, left, top, width, height,
                 l3_text, args.colorFillLevel2, args.borderColor, 1, args.fontSizeLevel2 - 2, False, args.textColorLevel2, align_left_top=True
