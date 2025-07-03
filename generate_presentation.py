@@ -226,29 +226,6 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
         draw_node_scaled(l1_node, 1, l1_lefts[i], margin, l1_width, scaling)
 
 def generate_from_dataframe(df, args, output_path=None):
-    # Spaltennamen im DataFrame normalisieren!
-    df.columns = [c.strip().upper().replace(' ', '_') for c in df.columns]
-    # Mapping für Spaltennamen aus dem Frontend
-    col_map = {
-        "ID1": "ID_1",
-        "ID2": "ID_2",
-        "ID3": "ID_3",
-        "LEVEL1_CAPABILITY": "LEVEL_1_CAPABILITY",
-        "LEVEL2_CAPABILITY": "LEVEL_2_CAPABILITY",
-        "LEVEL3_CAPABILITY": "LEVEL_3_CAPABILITY"
-    }
-    df = df.rename(columns=col_map)
-    # Ensure all required columns exist (for manual table input)
-    required_cols = [
-        'ID_1', 'ID_2', 'ID_3',
-        'LEVEL_1_CAPABILITY', 'LEVEL_2_CAPABILITY', 'LEVEL_3_CAPABILITY'
-    ]
-    for col in required_cols:
-        if col not in df.columns:
-            df[col] = ""
-    # Convert ID columns to string for robust handling, fill NaN/None/empty with '1'
-    for col in ['ID_1', 'ID_2', 'ID_3']:
-        df[col] = df[col].fillna("1").replace("", "1").astype(str)
     prs = Presentation()
     prs.slide_width = Inches(13.33)
     prs.slide_height = Inches(7.5)

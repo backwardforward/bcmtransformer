@@ -857,6 +857,63 @@
             .why-block-content { padding: 16px 2px; }
             .why-block-headline { font-size: 1em; }
         }
+        /* New: Data Format & Preview Section */
+        .data-format-section {
+            max-width: 900px;
+            margin: 40px auto 32px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px #0002;
+            padding: 32px 32px 24px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .data-format-section h2 {
+            color: #3674B5;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.7em;
+            text-align: center;
+        }
+        .data-format-section .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+        }
+        .data-format-section .image-container {
+            flex: 1 1 340px;
+            min-width: 260px;
+            max-width: 420px;
+            text-align: center;
+        }
+        .data-format-section .image-container img {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0001;
+        }
+        .data-format-section .download-button {
+            margin-top: 18px;
+            display: inline-block;
+            font-size: 1.1em;
+        }
+        .data-format-section .required-columns {
+            margin-top: 18px;
+            color: #444;
+            font-size: 1.08em;
+            text-align: center;
+            max-width: 700px;
+        }
+        .data-format-section .required-columns b {
+            color: #3674B5;
+        }
+        .data-format-section .required-columns span {
+            color: #3674B5;
+        }
     </style>
 </head>
 <body>
@@ -891,17 +948,17 @@
     <section id="how-it-works" class="how-section">
         <h2 class="how-title">How it works</h2>
         <div class="how-steps">
-            <div class="how-step" tabindex="0" data-target="#customize">
-                <div class="how-icon" style="background:#3674B5;"><i class="fa-solid fa-sliders-h"></i></div>
-                <div class="how-stepnum">Step 1</div>
-                <div class="how-heading">Customize your settings</div>
-                <div class="how-desc">Pick font sizes, colors, and box dimensions for your capability map.</div>
-            </div>
             <div class="how-step" tabindex="0" data-target="#input">
                 <div class="how-icon" style="background:#578FCA;"><i class="fa-solid fa-table"></i></div>
+                <div class="how-stepnum">Step 1</div>
+                <div class="how-heading">Upload your capabilities</div>
+                <div class="how-desc">Upload an Excel file with your capability data in the required format.</div>
+            </div>
+            <div class="how-step" tabindex="0" data-target="#customize">
+                <div class="how-icon" style="background:#3674B5;"><i class="fa-solid fa-sliders-h"></i></div>
                 <div class="how-stepnum">Step 2</div>
-                <div class="how-heading">Upload or enter your capabilities</div>
-                <div class="how-desc">Upload an Excel file or paste your capabilities manually into the table.</div>
+                <div class="how-heading">Customize your settings</div>
+                <div class="how-desc">Pick font sizes, colors, and box dimensions for your capability map.</div>
             </div>
             <div class="how-step" tabindex="0" data-target="#input">
                 <div class="how-icon" style="background:#FADA7A;"><i class="fa-solid fa-bolt"></i></div>
@@ -917,16 +974,61 @@
             </div>
         </div>
     </section>
+    <!-- Data Format & Preview Section -->
+    <section class="data-format-section">
+        <h2>How to Prepare Your Data</h2>
+        <div class="flex-container">
+            <div class="image-container">
+                <img src="/static/sample_bcm_excel.png" alt="Sample BCM Excel Format" />
+                <a href="/static/sample_bcm.xlsx" download class="bcm-browse-btn download-button">Download Sample Excel</a>
+            </div>
+            <div class="image-container">
+                <img src="/static/capability_map_preview.png" alt="Capability Map Preview" />
+                <div style="margin-top:12px;color:#578FCA;font-size:1.1em;">Preview: Output Capability Map</div>
+            </div>
+        </div>
+        <div class="required-columns">
+            <b>Required Excel columns:</b> <br>
+            <span>ID_1, ID_2, ID_3, Level_1_Capability, Level_2_Capability, Level_3_Capability, Full_ID</span><br>
+            (Column names must match exactly. See sample file for details.)
+        </div>
+    </section>
     <!-- Main App Section -->
     <div id="generator" class="main-card" style="margin-top:64px;">
         <div class="header">
             <div class="header-title">🗺️ Business Capability Map Generator</div>
             <div class="header-sub">Customize your settings, input your data, and generate your map in seconds.</div>
         </div>
-        <!-- Step 1 -->
-        <div id="customize"></div>
+        <!-- Step 1: Input Data -->
         <div class="step">
             <div class="step-number">1</div>
+            <div class="step-title">Input Your Capability Data</div>
+            <div class="input-options">
+                <!-- Excel Upload -->
+                <div class="excel-upload">
+                    <div class="bcm-upload-drop" id="uploadArea">
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                        <div class="bcm-upload-text">Upload Excel File (.xlsx)</div>
+                        <div style="margin: 8px 0; color: var(--secondary);">or</div>
+                        <button type="button" class="bcm-browse-btn" onclick="document.getElementById('excelFile').click()">Browse</button>
+                        <input type="file" id="excelFile" name="excelFile" accept=".xlsx,.xls" onchange="handleFileSelect(event)">
+                        <small style="color: var(--secondary); margin-top: 10px; display: block;">Supported format: .XLSX, .XLS</small>
+                    </div>
+                    <div class="bcm-upload-list">
+                        <div class="bcm-upload-list-title">Uploaded File</div>
+                        <div id="fileList"></div>
+                        <form id="bcmForm" onsubmit="generatePresentation(event)" enctype="multipart/form-data" class="bcm-form-section">
+                            <button type="submit" class="generate-btn" style="margin-top:18px;width:100%;">Generate from File</button>
+                        </form>
+                        <div id="upload-loading" class="spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i><br><span>Generating PowerPoint...</span></div>
+                        <div id="upload-download" style="display:none;text-align:center;margin-top:18px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Step 2: Customize Map -->
+        <div class="step">
+            <div class="step-number">2</div>
             <div class="step-title">Customize Your Map</div>
             <form id="configForm" class="config-grid">
                 <div class="form-group">
@@ -980,108 +1082,6 @@
                     </select>
                 </div>
             </form>
-        </div>
-        <!-- Step 2 -->
-        <div id="input"></div>
-        <div class="step">
-            <div class="step-number">2</div>
-            <div class="step-title">Input Your Capability Data</div>
-            <div class="input-options">
-                <!-- Excel Upload -->
-                <div class="excel-upload">
-                    <div class="bcm-upload-drop" id="uploadArea">
-                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                        <div class="bcm-upload-text">Upload Excel File (.xlsx)</div>
-                        <div style="margin: 8px 0; color: var(--secondary);">or</div>
-                        <button type="button" class="bcm-browse-btn" onclick="document.getElementById('excelFile').click()">Browse</button>
-                        <input type="file" id="excelFile" name="excelFile" accept=".xlsx,.xls" onchange="handleFileSelect(event)">
-                        <small style="color: var(--secondary); margin-top: 10px; display: block;">Supported format: .XLSX, .XLS</small>
-                    </div>
-                    <div class="bcm-upload-list">
-                        <div class="bcm-upload-list-title">Uploaded File</div>
-                        <div id="fileList"></div>
-                        <form id="bcmForm" onsubmit="generatePresentation(event)" enctype="multipart/form-data" class="bcm-form-section">
-                            <button type="submit" class="generate-btn" style="margin-top:18px;width:100%;">Generate from File</button>
-                        </form>
-                        <div id="upload-loading" class="spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i><br><span>Generating PowerPoint...</span></div>
-                        <div id="upload-download" style="display:none;text-align:center;margin-top:18px;"></div>
-                    </div>
-                </div>
-                <div class="or-separator">
-                    <div>OR</div>
-                </div>
-                <!-- Manual Table -->
-                <div class="manual-table">
-                    <div class="table-wrapper">
-                        <table id="capabilityTable">
-                            <thead>
-                                <tr>
-                                    <th>ID1</th>
-                                    <th>ID2</th>
-                                    <th>ID3</th>
-                                    <th>Level1 Capability</th>
-                                    <th>Level2 Capability</th>
-                                    <th>Level3 Capability</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:var(--yellow);"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td contenteditable="true" style="background:#fff;"></td>
-                                    <td><button type="button" class="delete-row-btn" title="Delete row" onclick="deleteTableRow(this)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="button-row">
-                        <button type="button" class="add-row-btn" onclick="addTableRow()"><i class="fa fa-plus"></i> Add Row</button>
-                        <button type="button" class="generate-btn" style="margin-left:auto;" onclick="generateFromTable()">Generate from Table</button>
-                    </div>
-                    <div id="table-loading" class="spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i><br><span>Generating PowerPoint...</span></div>
-                    <div id="table-download" style="display:none;text-align:center;margin-top:18px;"></div>
-                </div>
-            </div>
         </div>
         <!-- Step 3 is handled by the output areas in each option -->
         <footer class="footer">
