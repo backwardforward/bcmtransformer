@@ -208,7 +208,7 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             top_padding = Cm(TOP_PADDING_CM)
             bottom_margin = Cm(BOTTOM_MARGIN_CM)
             if num_l3 > 0:
-                height = top_padding + num_l3 * (height_l3 + padding) - padding + bottom_margin
+                height = l2_box_text_height + top_padding + num_l3 * (height_l3 + padding) - padding + bottom_margin
             else:
                 height = l2_box_min_height
             height = float(height)
@@ -217,14 +217,13 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
                 slide, left, top, width, height,
                 l2_text, args.colorFillLevel2, args.borderColor, 1.5, args.fontSizeLevel2 + 1, True, args.textColorLevel2, align_left_top=True
             )
-            # Place L3s strictly inside L2
+            # Place L3s strictly inside L2, below the title
             l3_left = left + max(min_padding or 0, scaling_f * (child_left_pad or 0))
             l3_width = width - 2 * max(min_padding or 0, scaling_f * (child_left_pad or 0))
-            y = top + top_padding
+            y = top + l2_box_text_height + top_padding
             for l3_id, l3_nodes in children.items():
                 for l3_node in l3_nodes:
                     l3_height = float(height_l3)
-                    # Place L3 relative to L2's top/left
                     draw_node_scaled(l3_node, 3, l3_left, y, l3_width, scaling_f)
                     y += l3_height + float(padding)
             return height
