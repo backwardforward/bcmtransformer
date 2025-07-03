@@ -83,6 +83,10 @@ def generate():
             "error": e.stderr.strip()
         }), 500
 
+@app.route("/healthz")
+def healthz():
+    return "OK", 200
+
 def main():
     app.run(host='0.0.0.0', port=5000, debug=True)
 
