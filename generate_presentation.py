@@ -207,12 +207,12 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             padding = Cm(PADDING_CM)
             top_padding = Cm(TOP_PADDING_CM)
             bottom_margin = Cm(BOTTOM_MARGIN_CM)
+            header_reserved = l2_box_text_height * 0.7
             if num_l3 > 0:
-                height = l2_box_text_height + top_padding + num_l3 * (height_l3 + padding) - padding + bottom_margin
+                height = header_reserved + top_padding + num_l3 * (height_l3 + padding) - padding + bottom_margin
             else:
                 height = l2_box_min_height
             height = float(height)
-            header_h = l2_box_text_height * 0.7
             l2_shape = add_colored_box(
                 slide, left, top, width, height,
                 l2_text, args.colorFillLevel2, args.borderColor, 1.5, args.fontSizeLevel2 + 1, True, args.textColorLevel2, align_left_top=True
@@ -220,7 +220,7 @@ def add_business_capabilities(slide, df, args, prs_width, prs_height):
             # Place L3s strictly inside L2, below the title
             l3_left = left + max(min_padding or 0, scaling_f * (child_left_pad or 0))
             l3_width = width - 2 * max(min_padding or 0, scaling_f * (child_left_pad or 0))
-            y = top + l2_box_text_height + top_padding
+            y = top + header_reserved + top_padding
             for l3_id, l3_nodes in children.items():
                 for l3_node in l3_nodes:
                     l3_height = float(height_l3)

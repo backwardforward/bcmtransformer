@@ -74,6 +74,7 @@ def generate():
             "success": True,
             "download_url": download_url
         })
+        
     except subprocess.CalledProcessError as e:
         logging.error(f"Error: {e.stderr}")
         return jsonify({
