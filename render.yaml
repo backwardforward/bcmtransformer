@@ -3,7 +3,7 @@ services:
     name: bcm-transformer
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python -m bcm_transformer.app
+    startCommand: gunicorn bcm_transformer.app:app
     envVars:
       - key: FLASK_ENV
         value: production
