@@ -1,5 +1,7 @@
 # BCM Transformer
 
+> **Notice:** This project is **source-available** but **not open source**. The source code is provided for review and non-commercial use only, under the Polyform Noncommercial License 1.0.0. Commercial use, modification, or redistribution is not permitted.
+
 A web application for generating Business Capability Maps from Excel data and creating professional PowerPoint presentations.
 
 ## Features
@@ -100,7 +102,9 @@ The application expects Excel files with business capability data. Use the provi
 
 ## License
 
-This project is licensed under the Polyform Noncommercial License 1.0.0. See the [LICENSE](LICENSE) file for details.
+- This project is **not open source**. The source code is provided under a source-available license.
+- Licensed under the Polyform Noncommercial License 1.0.0. See the [LICENSE](LICENSE) file for details.
+- **Commercial use is strictly prohibited.**
 
 ## Contributing
 
