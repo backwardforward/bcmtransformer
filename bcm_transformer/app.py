@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from pptx import Presentation
 from pptx.util import Inches, Cm, Pt
-from generate_presentation import generate_from_dataframe
+from .generate_presentation import generate_from_dataframe
 import pandas as pd
 import uuid
 from datetime import datetime
